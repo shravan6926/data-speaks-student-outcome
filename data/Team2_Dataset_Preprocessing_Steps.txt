@@ -1,0 +1,124 @@
+TEAM 1 - DATASET PREPROCESSING STEPS
+
+Project: Data Speaks: Student Dropout Prediction and Academic Success Analysis
+
+
+1. DATASET LOADING
+------------------
+The Predict Students' Dropout and Academic Success dataset was loaded from the CSV file using Pandas.
+
+
+2. INITIAL DATA INSPECTION
+--------------------------
+The dataset was inspected using:
+- head()
+- columns
+- info()
+- describe()
+- shape
+- data types
+- unique values
+
+The dataset contains 4,424 student records.
+
+
+3. MISSING VALUE CHECK
+----------------------
+Missing values were checked for all columns.
+
+Result:
+- No missing values were found.
+
+
+4. DUPLICATE CHECK
+------------------
+Duplicate records were checked and removed if present.
+
+Result:
+- No duplicate records were found.
+
+
+5. TARGET VARIABLE
+------------------
+The target variable is "Target".
+
+It contains three student outcome classes:
+- Dropout
+- Enrolled
+- Graduate
+
+
+6. FEATURE IDENTIFICATION
+-------------------------
+The features were separated into:
+- Numerical features
+- Categorical features
+
+The target variable was separated from the input features before model training.
+
+
+7. CATEGORICAL FEATURE ENCODING
+-------------------------------
+Categorical variables were converted into numerical form using One-Hot Encoding.
+
+This allows machine learning algorithms to work with categorical data.
+
+
+8. NUMERICAL FEATURE SCALING
+----------------------------
+Numerical features were standardized using StandardScaler.
+
+This places numerical variables on a comparable scale and prevents features with larger numerical ranges from dominating the model.
+
+
+9. TRAIN-TEST SPLIT
+-------------------
+The dataset was divided into training and testing sets.
+
+The training data was used to fit the preprocessing transformations and machine learning models, while the test data was used for final evaluation.
+
+
+10. PREPROCESSING PIPELINE
+--------------------------
+A ColumnTransformer-based preprocessing pipeline was used.
+
+- Numerical features → StandardScaler
+- Categorical features → OneHotEncoder
+
+The transformations were fitted only on the training data and then applied to the test data to avoid data leakage.
+
+
+11. FEATURES FOR K-MEANS AND PCA
+--------------------------------
+Eleven academic and enrollment-related features were selected for K-Means clustering and PCA.
+
+These features include:
+- Age at enrollment
+- Previous qualification grade
+- Admission grade
+- First-semester enrolled courses
+- First-semester evaluations
+- First-semester approved courses
+- First-semester grade
+- Second-semester enrolled courses
+- Second-semester evaluations
+- Second-semester approved courses
+- Second-semester grade
+
+
+12. SCALING FOR K-MEANS AND PCA
+-------------------------------
+The selected 11 features were standardized using StandardScaler before applying K-Means clustering and PCA because the features have different numerical scales.
+
+
+13. FINAL PREPROCESSED DATA
+---------------------------
+The cleaned dataset was saved as:
+
+data_preprocessed.csv
+
+Final dataset:
+- 4,424 records
+- 37 columns
+- 0 missing values
+- 0 duplicate records

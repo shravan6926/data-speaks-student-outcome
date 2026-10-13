@@ -27,19 +27,33 @@ const modelTable = [
 ];
 
 const clusterRows = [
-  ["0", "778", "17.6%", "Low performance", "81.75% Dropout"],
-  ["1", "1,871", "42.3%", "Intermediate", "45.54% Graduate"],
-  ["2", "240", "5.4%", "High engagement", "66.25% Graduate"],
-  ["3", "1,535", "34.7%", "Strong performance", "73.09% Graduate"],
+  ["0", "778", "17.6%", "Low performance", "Not provided", "81.75%"],
+  ["1", "1,871", "42.3%", "Intermediate", "45.54%", "29.24%"],
+  ["2", "240", "5.4%", "High engagement", "66.25%", "Not provided"],
+  ["3", "1,535", "34.7%", "Strong performance", "73.09%", "Not provided"],
+];
+
+const teamMembers = [
+  {
+    name: "Add team member name",
+    photo: null,
+    biography: "Add biography",
+    contribution: "Add project contribution",
+  },
 ];
 
 function App() {
+  const [activeTab, setActiveTab] = useState("project");
   const [values, setValues] = useState(Object.fromEntries(numericInputs.map(([k, v]) => [k, v])));
   const [prediction, setPrediction] = useState(null);
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState("");
 
   const update = (key, value) => setValues(v => ({ ...v, [key]: value }));
+  const selectTab = tab => {
+    setActiveTab(tab);
+    window.scrollTo(0, 0);
+  };
 
   async function predict() {
     setLoading(true);
@@ -64,28 +78,40 @@ function App() {
   return (
     <div>
       <header className="topbar">
-        <a className="brand" href="#home">DATA <span>SPEAKS</span></a>
-        <nav>
+        <button className="brand" type="button" onClick={() => selectTab("project")}>DATA <span>SPEAKS</span></button>
+        <nav className="tab-nav" aria-label="Primary navigation">
           {[
-            ["Project","#project"],["Dataset","#dataset"],["EDA","#eda"],["Methodology","#methodology"],
-            ["Results","#results"],["Clustering","#clustering"],["PCA","#pca"],["Prediction","#prediction"],["Conclusion","#conclusion"]
-          ].map(([label, href]) => <a key={href} href={href}>{label}</a>)}
+            ["Project", "project"],
+            ["Results", "results"],
+            ["Team", "team"]
+          ].map(([label, tab]) => (
+            <button
+              key={tab}
+              type="button"
+              className={activeTab === tab ? "active" : ""}
+              aria-current={activeTab === tab ? "page" : undefined}
+              onClick={() => selectTab(tab)}
+            >
+              {label}
+            </button>
+          ))}
         </nav>
       </header>
 
       <main>
-        <section id="home" className="hero section">
+        <section id="home" className="hero section" hidden={activeTab !== "project"}>
           <div className="hero-copy">
             <p className="eyebrow">Educational Data Mining · College Project</p>
             <h1>Data Speaks: <span>Student Dropout Prediction</span> and Academic Success Analysis</h1>
             <p className="lead">
-              An end-to-end data science study of 4,424 students, combining exploratory analysis,
-              classification, K-Means clustering and PCA to understand student outcomes.
+              How can student data help us understand dropout, continued enrollment, and academic success?
+              This project investigates student outcomes through data exploration, classification, clustering,
+              and dimensionality reduction.
             </p>
             <div className="hero-actions">
-              <a className="btn primary" href="#project">Explore the Project</a>
-              <a className="btn ghost" href="#results">Explore Results</a>
-              <a className="btn ghost" href="#prediction">Try Prediction</a>
+              <a className="btn primary" href="#project">Project overview</a>
+              <button className="btn ghost" type="button" onClick={() => selectTab("results")}>Explore Results</button>
+              <button className="btn ghost" type="button" onClick={() => selectTab("results")}>View Results & Prediction</button>
             </div>
           </div>
           <div className="pipeline-card">
@@ -99,24 +125,23 @@ function App() {
           </div>
         </section>
 
-        <section id="project" className="section">
-          <div className="section-head"><p className="eyebrow">01 · PROJECT</p><h2>One project, three questions.</h2></div>
+        <section id="project" className="section" hidden={activeTab !== "project"}>
+          <div className="section-head"><p className="eyebrow">PROJECT OVERVIEW</p><h2>Why study student outcomes?</h2><p>Dropout and academic success are important educational outcomes. Understanding how student characteristics relate to those outcomes can help describe patterns in the data, while the analysis itself cannot establish why an individual student succeeds or leaves.</p></div>
           <div className="question-grid">
-            <article><span>01</span><h3>Can outcomes be predicted?</h3><p>Classification predicts Dropout, Enrolled, or Graduate from demographic, academic and enrollment characteristics.</p></article>
-            <article><span>02</span><h3>What student profiles exist?</h3><p>K-Means groups students using 11 academic and enrollment features without using the target during clustering.</p></article>
-            <article><span>03</span><h3>What structure is visible?</h3><p>PCA compresses those 11 standardized features into five components for compact analysis and visualization.</p></article>
+            <article><span>01</span><h3>Compare outcomes</h3><p>Evaluate classification approaches for the Dropout, Enrolled, and Graduate categories.</p></article>
+            <article><span>02</span><h3>Explore student profiles</h3><p>Use K-Means to group students by selected academic and enrollment features, then describe the groups.</p></article>
+            <article><span>03</span><h3>Summarize feature structure</h3><p>Use PCA to reduce the selected feature space and visualize patterns in the data.</p></article>
           </div>
           <div className="story">
-            <div><p className="eyebrow">WHY IT MATTERS</p><h3>Student outcomes reflect multiple academic and enrollment signals.</h3></div>
-            <p>The project studies these signals together rather than treating dropout, continued enrollment and graduation as isolated labels. The result is a single workflow that provides both predictive and descriptive insight.</p>
+            <div><p className="eyebrow">PROJECT SIGNIFICANCE</p><h3>Prediction and description answer different questions.</h3></div>
+            <p>Classification compares predictive performance, while clustering and PCA offer descriptive views of student similarities and feature structure. Together, these methods provide complementary perspectives on the same outcomes without implying causal effects.</p>
           </div>
         </section>
 
-        <section id="dataset" className="section alt">
-          <div className="section-head"><p className="eyebrow">02 · DATASET</p><h2>The dataset behind the story.</h2><p>“Predict Students’ Dropout and Academic Success” contains demographic, academic and enrollment-related information.</p></div>
+        <section id="dataset" className="section alt" hidden={activeTab !== "project"}>
+          <div className="section-head"><p className="eyebrow">DATASET OVERVIEW</p><h2>4,424 student records.</h2><p>The dataset contains demographic, academic, and enrollment-related information, with three target classes.</p></div>
           <div className="stat-grid">
             <Stat n="4,424" label="Students" />
-            <Stat n="36" label="Input features" />
             <Stat n="37" label="Total columns" />
             <Stat n="3" label="Target classes" />
           </div>
@@ -135,34 +160,35 @@ function App() {
           </div>
         </section>
 
-        <section id="methodology" className="section">
-          <div className="section-head"><p className="eyebrow">03 · PREPROCESSING & METHODOLOGY</p><h2>From raw records to model-ready data.</h2></div>
+        <section id="methodology" className="section" hidden={activeTab !== "project"}>
+          <div className="section-head"><p className="eyebrow">METHODOLOGY</p><h2>One workflow, three analytical approaches.</h2><p>Quality checks and preprocessing prepared the data for classification, clustering, PCA, and evaluation.</p></div>
           <div className="method-grid">
             {[
-              ["01","Inspect","head(), columns, info(), describe(), shape, data types and unique values."],
-              ["02","Clean","0 missing values and 0 duplicate records were found."],
-              ["03","Encode","Categorical variables were transformed with One-Hot Encoding."],
-              ["04","Scale","Numerical variables were standardized with StandardScaler."],
-              ["05","Split","Training and test subsets were created with stratification and a 20% test set."],
-              ["06","Pipeline","ColumnTransformer fitted preprocessing only on training data to avoid leakage."]
+              ["01","Check data quality","Inspect records, columns, data types, missing values, and duplicate records."],
+              ["02","Preprocess","One-Hot Encode categorical features and standardize numerical features for classification."],
+              ["03","Classify","Train and compare four classification models for the three target classes."],
+              ["04","Cluster","Apply K-Means to 11 selected academic and enrollment features without using the target."],
+              ["05","Reduce dimensions","Apply PCA to the same selected 11-feature space for analysis and visualization."],
+              ["06","Evaluate","Compare classification metrics and examine the resulting figures and group patterns."]
             ].map(([n,t,d]) => <article className="method-card" key={n}><b>{n}</b><h3>{t}</h3><p>{d}</p></article>)}
           </div>
           <div className="feature-note">
             <div><p className="mini-label">CLUSTERING + PCA FEATURES</p><strong>11 academic & enrollment features</strong></div>
-            <p>Age at enrollment, previous qualification grade, admission grade, first- and second-semester enrollment, evaluations, approved courses and grades. These 11 features were standardized before K-Means and PCA.</p>
+            <p>The selected feature set covers age at enrollment, qualification and admission grades, and first- and second-semester enrollment, evaluations, approved courses, and grades.</p>
           </div>
+          <div className="limitation-note"><strong>Limitations</strong><p>The findings describe patterns and associations in this dataset; they do not show causal effects or guarantee outcomes for individuals. The prediction demo exposes 12 numerical inputs and fills the remaining categorical inputs with their most common dataset values.</p></div>
         </section>
 
-        <section id="eda" className="section alt">
-          <div className="section-head"><p className="eyebrow">04 · EDA</p><h2>What the exploratory analysis shows.</h2><p>Real figures from the project are used throughout this page; each visual is paired with the project’s interpretation.</p></div>
+        <section id="eda" className="section alt" hidden={activeTab !== "results"}>
+          <div className="section-head"><p className="eyebrow">A · DATASET EXPLORATION</p><h2>Explore the target and first-semester grades.</h2></div>
           <div className="figure-grid two">
-            <Figure src={FIG("fig1_target_distribution.png")} title="Target distribution" text="Graduate is the largest outcome group, while Enrolled is the smallest. The three target categories are all represented in the dataset."/>
-            <Figure src={FIG("fig2_first_semester_grade.png")} title="First-semester grade by outcome" text="Students who eventually graduated generally show higher first-semester grades, while Dropout students tend to have lower grades."/>
+            <Figure src={FIG("fig1_target_distribution.png")} title="Target distribution" text="Graduate is the largest group in the plotted distribution, followed by Dropout; Enrolled is the smallest group."/>
+            <Figure src={FIG("fig2_first_semester_grade.png")} title="First-semester grade by outcome" text="The median first-semester grade is higher for Graduate than for Enrolled and Dropout. Dropout grades show a wider spread, including many values at zero."/>
           </div>
         </section>
 
-        <section id="results" className="section">
-          <div className="section-head"><p className="eyebrow">05 · CLASSIFICATION</p><h2>Predicting the student outcome.</h2><p>The final supervised task is multiclass prediction: Dropout, Enrolled, or Graduate.</p></div>
+        <section id="classification" className="section" hidden={activeTab !== "results"}>
+          <div className="section-head"><p className="eyebrow">B · CLASSIFICATION RESULTS</p><h2>Comparing four classification models.</h2><p>The supervised task predicts Dropout, Enrolled, or Graduate.</p></div>
           <div className="result-highlight">
             <div><p className="mini-label">FINAL MODEL</p><strong>Logistic Regression</strong><span>Selected for overall predictive performance and interpretability.</span></div>
             <div className="big-metric"><b>73.9%</b><span>test accuracy</span></div>
@@ -173,54 +199,47 @@ function App() {
               {modelTable.map(r => <tr key={r[0]} className={r[0]==="Logistic Regression" ? "selected" : ""}><td>{r[0]}</td><td>{r[1]}</td><td>{r[2]}</td></tr>)}
             </tbody></table>
           </div>
+          <p className="result-explanation">Logistic Regression had the strongest overall results in this comparison, leading in both accuracy and weighted F1, and was selected with interpretability as an additional consideration.</p>
           <div className="figure-grid one">
-            <Figure src={FIG("fig3_confusion_matrix.png")} title="Final Logistic Regression — confusion matrix" text="Rows are actual outcomes and columns are predicted outcomes. The matrix shows substantial correct identification for Dropout and Graduate; Enrolled is comparatively harder to distinguish."/>
+            <Figure src={FIG("fig3_confusion_matrix.png")} title="Final Logistic Regression — confusion matrix" text="Rows are actual outcomes and columns are predicted outcomes. Dropout and Graduate are reasonably well distinguished, while Enrolled is more difficult to classify."/>
           </div>
         </section>
 
-        <section id="clustering" className="section alt">
-          <div className="section-head"><p className="eyebrow">06 · K-MEANS</p><h2>Four academic profiles emerge.</h2><p>The Elbow Method supported K = 4. The target was not used to form clusters; it was compared afterward to interpret the resulting groups.</p></div>
+        <section id="clustering" className="section alt" hidden={activeTab !== "results"}>
+          <div className="section-head"><p className="eyebrow">C · K-MEANS CLUSTERING</p><h2>Four groups from academic and enrollment features.</h2><p>The elbow curve supported K = 4. The target was not used to construct the clusters; it was compared afterward to help interpret them.</p></div>
           <div className="figure-grid two">
-            <Figure src={FIG("fig4_elbow_method.png")} title="Elbow method" text="Inertia falls as K increases, with the reduction becoming less pronounced after approximately four clusters. The project therefore selected K = 4."/>
+            <Figure src={FIG("fig4_elbow_method.png")} title="Elbow method" text="The reduction in inertia becomes less pronounced around K = 4, supporting the selection of four clusters."/>
             <div className="cluster-table-wrap">
-              <table><thead><tr><th>Cluster</th><th>Students</th><th>Share</th><th>Profile</th><th>Key outcome</th></tr></thead>
-              <tbody>{clusterRows.map(r=><tr key={r[0]}><td>{r[0]}</td><td>{r[1]}</td><td>{r[2]}</td><td>{r[3]}</td><td>{r[4]}</td></tr>)}</tbody></table>
+              <table><thead><tr><th>Cluster</th><th>Students</th><th>Share</th><th>Interpretation</th><th>Graduate</th><th>Dropout</th></tr></thead>
+              <tbody>{clusterRows.map(r=><tr key={r[0]}><td>{r[0]}</td><td>{r[1]}</td><td>{r[2]}</td><td>{r[3]}</td><td>{r[4]}</td><td>{r[5]}</td></tr>)}</tbody></table>
             </div>
           </div>
-          <div className="cluster-cards">
-            <Cluster n="0" title="Low performance" text="Very low approved-course counts and semester grades; 81.75% of students are Dropout."/>
-            <Cluster n="1" title="Intermediate" text="The largest group, with moderate academic engagement and mixed outcomes; 45.54% are Graduate."/>
-            <Cluster n="2" title="High engagement" text="Smallest group, with strong enrollment, evaluation and course completion; 66.25% are Graduate."/>
-            <Cluster n="3" title="Strong performance" text="High semester grades and course approval; 73.09% are Graduate."/>
-          </div>
-          <p className="callout">Interpretation: these are associations in the dataset, not causal claims. Cluster labels are simply K-Means labels.</p>
+          <p className="callout">Cluster 1 contains the largest share of students, while Cluster 2 contains the smallest. The reported outcome proportions differ across clusters; these are associations used to describe groups, not causal effects. Outcome values not included in the project findings are marked “Not provided.”</p>
         </section>
 
-        <section id="pca" className="section">
-          <div className="section-head"><p className="eyebrow">07 · PCA</p><h2>11 dimensions → 5 components.</h2><p>PCA creates a compact representation of the selected academic and enrollment feature space while retaining most of its variance.</p></div>
+        <section id="pca" className="section" hidden={activeTab !== "results"}>
+          <div className="section-head"><p className="eyebrow">D · PCA & DIMENSIONALITY REDUCTION</p><h2>11 features reduced to five components.</h2><p>PCA summarizes selected academic and enrollment features for dimensionality reduction and visualization; it is not a separate prediction model.</p></div>
           <div className="pca-metrics"><div><b>47.73%</b><span>PC1 variance</span></div><div><b>75.85%</b><span>First 3 components</span></div><div><b>89.95%</b><span>First 5 components</span></div></div>
           <div className="figure-grid two">
             <Figure src={FIG("fig5_pca_variance.png")} title="Cumulative explained variance" text="The first five components retain approximately 89.95% of total variance, so five components were selected as the compact representation."/>
-            <Figure src={FIG("fig6_pca_by_target.png")} title="PCA by student outcome" text="The outcome groups show some structure, but substantial overlap remains. The three outcomes are not completely separable using the reduced representation alone."/>
+            <Figure src={FIG("fig6_pca_by_target.png")} title="PCA by student outcome" text="The target classes overlap in the reduced feature space, so the first components do not separate the three outcomes into completely distinct groups."/>
           </div>
           <div className="figure-grid one">
             <Figure src={FIG("fig7_pca_by_cluster.png")} title="PCA by K-Means cluster" text="Clusters occupy distinguishable regions in the reduced feature space, providing a complementary view of similarity in academic and enrollment characteristics."/>
           </div>
         </section>
 
-        <section className="section alt">
-          <div className="section-head"><p className="eyebrow">08 · KEY FINDINGS</p><h2>The project in six signals.</h2></div>
+        <section className="section alt" hidden={activeTab !== "results"}>
+          <div className="section-head"><p className="eyebrow">E · KEY FINDINGS & CONCLUSION</p><h2>Three complementary views of student outcomes.</h2></div>
           <div className="findings">
-            <Finding n="01" t="Academic performance matters" d="The analysis found strong association between academic performance, course completion and student outcomes."/>
-            <Finding n="02" t="73.9% test accuracy" d="The selected Logistic Regression model achieved 73.9% accuracy and 72.4% weighted F1 on the test set."/>
-            <Finding n="03" t="Enrolled is harder to classify" d="The confusion matrix shows greater overlap for the Enrolled category than for Dropout and Graduate."/>
-            <Finding n="04" t="Four profiles" d="K-Means identified four groups with substantially different academic characteristics and outcome distributions."/>
-            <Finding n="05" t="Cluster 0 stands out" d="81.75% of Cluster 0 students are Dropout, alongside very low course approval and semester grades."/>
-            <Finding n="06" t="PCA keeps most information" d="Five components retain approximately 89.95% of variance from the selected 11 features."/>
+            <Finding n="01" t="Classification" d="Logistic Regression had the best accuracy (73.9%) and weighted F1 (72.4%) among the four compared models; Enrolled remained harder to distinguish."/>
+            <Finding n="02" t="Clustering" d="K-Means produced four groups with different reported outcome proportions. Those associations help describe the clusters but do not establish causes."/>
+            <Finding n="03" t="PCA" d="Five components retained approximately 89.95% of the variance in the selected 11 features, supporting compact visualization."/>
           </div>
+          <div className="final-takeaway"><span>CONCLUSION & LIMITATIONS</span><strong>Classification, clustering, and PCA provide complementary predictive and descriptive insights, but results are limited to patterns in this dataset and should not be interpreted as causal or individual guarantees.</strong></div>
         </section>
 
-        <section id="prediction" className="section prediction-section">
+        <section id="prediction" className="section prediction-section" hidden={activeTab !== "results"}>
           <div className="section-head"><p className="eyebrow">09 · STUDENT OUTCOME PREDICTION</p><h2>Try the saved project model.</h2><p>This local demo sends your inputs to the actual saved Logistic Regression pipeline supplied with the project.</p></div>
           <div className="prediction-layout">
             <div className="prediction-form">
@@ -241,15 +260,55 @@ function App() {
           </div>
         </section>
 
-        <section id="conclusion" className="section conclusion">
-          <div className="section-head"><p className="eyebrow">10 · CONCLUSION</p><h2>What the project accomplished.</h2></div>
-          <div className="conclusion-grid">
-            <p>The study combined exploratory data analysis, classification, K-Means clustering and PCA to obtain both predictive and descriptive insights from 4,424 students.</p>
-            <p>Logistic Regression provided the selected classification result at 73.9% accuracy and 72.4% weighted F1, while the confusion matrix highlighted the greater difficulty of the Enrolled class.</p>
-            <p>K-Means revealed four academic profiles with substantially different outcome distributions, including a low-performance cluster strongly associated with Dropout and strong-performance groups with higher Graduate proportions.</p>
-            <p>PCA reduced the selected 11-feature space to five components while retaining approximately 89.95% of the variance, making the structure easier to visualize.</p>
+        <section className="section team-section" hidden={activeTab !== "team"}>
+          <div className="team-intro">
+            <div className="team-intro-copy">
+              <p className="eyebrow">MEET THE TEAM</p>
+              <h1>The People Behind <span>Data Speaks</span></h1>
+              <p>We are a team exploring how data science and machine learning can help us understand student dropout patterns and academic success. Through data analysis, predictive modeling, clustering, and visualization, we worked together to turn student data into meaningful insights.</p>
+            </div>
+            <div className="team-intro-note">
+              <span>PROJECT APPROACH</span>
+              <strong>Data analysis<br />to meaningful insights</strong>
+              <i aria-hidden="true" />
+            </div>
           </div>
-          <div className="final-takeaway"><span>FINAL TAKEAWAY</span><strong>Predictive modeling + clustering + dimensionality reduction provide a fuller view of student outcomes than any single technique alone.</strong></div>
+          <div className="team-profiles">
+            <div className="team-section-heading">
+              <div><p className="eyebrow">PROJECT CONTRIBUTORS</p><h2>Meet the people</h2></div>
+              <p>Member details can be added to the team profile data in the project source.</p>
+            </div>
+            <div className="team-grid">
+              {teamMembers.map((member, index) => (
+                <article className="team-card" key={`${member.name}-${index}`}>
+                  <div className="team-portrait">
+                    {member.photo ? (
+                      <img src={member.photo} alt={`${member.name} portrait`} />
+                    ) : (
+                      <div className="team-photo-placeholder" role="img" aria-label="Add team member photo">
+                        <span>PORTRAIT</span>
+                        <strong>DS</strong>
+                        <small>Add team member photo</small>
+                      </div>
+                    )}
+                  </div>
+                  <div className="team-card-content">
+                    <p className="eyebrow">TEAM MEMBER</p>
+                    <h3>{member.name}</h3>
+                    <div className="team-detail">
+                      <span>BIOGRAPHY</span>
+                      <p>{member.biography}</p>
+                    </div>
+                    <div className="team-detail">
+                      <span>PROJECT CONTRIBUTION</span>
+                      <p>{member.contribution}</p>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+            <p className="team-editor-note">The project materials do not include verified member names, photographs, biographies, or individual contributions. Replace these editable prompts with confirmed details before presenting the profiles as real team members.</p>
+          </div>
         </section>
       </main>
 
@@ -260,7 +319,6 @@ function App() {
 
 function Stat({n,label}) { return <div className="stat"><b>{n}</b><span>{label}</span></div> }
 function Figure({src,title,text}) { return <figure><img src={src} alt={title}/><figcaption><h3>{title}</h3><p>{text}</p></figcaption></figure> }
-function Cluster({n,title,text}) { return <article className="cluster-card"><span>CLUSTER {n}</span><h3>{title}</h3><p>{text}</p></article> }
 function Finding({n,t,d}) { return <article><span>{n}</span><div><h3>{t}</h3><p>{d}</p></div></article> }
 
 createRoot(document.getElementById("root")).render(<App />);

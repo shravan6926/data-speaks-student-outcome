@@ -35,10 +35,34 @@ const clusterRows = [
 
 const teamMembers = [
   {
-    name: "Add team member name",
+    name: "Shravan Pawar",
     photo: null,
-    biography: "Add biography",
-    contribution: "Add project contribution",
+    biography: "A simple Biography",
+    contribution: "Team Leader, worked in project workflow, data processing, classification, PCA, visualisation and providing framework to the website",
+  },
+  {
+    name: "Prajyot Satarde",
+    photo: null,
+    biography: "A simple Biography",
+    contribution: "Worked in Core conceptual portion and made the frontend for the website",
+  },
+  {
+    name: "Shubham Adhav",
+    photo: null,
+    biography: "A simple Biography",
+    contribution: "Worked in analysing the data and processing the proper algorithms for the topic",
+  },
+  {
+    name: "Shankar",
+    photo: null,
+    biography: "A simple Biography",
+    contribution: "Helped the team to have proper data preprocessing and clustering",
+  },
+  {
+    name: "Manasa Osogulla",
+    photo: null,
+    biography: "A simple Biography",
+    contribution: "Managed the team to have a proper visualisation about the project",
   },
 ];
 
@@ -285,10 +309,10 @@ function App() {
                     {member.photo ? (
                       <img src={member.photo} alt={`${member.name} portrait`} />
                     ) : (
-                      <div className="team-photo-placeholder" role="img" aria-label="Add team member photo">
+                      <div className="team-photo-placeholder" role="img" aria-label="Photo coming soon">
                         <span>PORTRAIT</span>
                         <strong>DS</strong>
-                        <small>Add team member photo</small>
+                        <small>Photo coming soon</small>
                       </div>
                     )}
                   </div>
@@ -307,7 +331,7 @@ function App() {
                 </article>
               ))}
             </div>
-            <p className="team-editor-note">The project materials do not include verified member names, photographs, biographies, or individual contributions. Replace these editable prompts with confirmed details before presenting the profiles as real team members.</p>
+            <p className="team-editor-note">Team member names, biographies, and project contributions are listed above. Add portrait photos when the team has approved images available.</p>
           </div>
         </section>
       </main>

@@ -42,7 +42,7 @@ const teamMembers = [
   },
   {
     name: "Prajyot Satarde",
-    photo: null,
+    photo: "/team-portraits/prajyot-satarde.png",
     biography: "A simple Biography",
     contribution: "Worked in Core conceptual portion and made the frontend for the website",
   },

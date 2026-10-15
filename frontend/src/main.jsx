@@ -62,7 +62,7 @@ const teamMembers = [
     name: "Manasa Osogulla",
     photo: null,
     biography: "A simple Biography",
-    contribution: "Managed the team to have a proper visualisation about the project",
+    contribution: "Managed the team to have a proper visualisation about the project, made project report and the ppt for the presentation",
   },
 ];
 

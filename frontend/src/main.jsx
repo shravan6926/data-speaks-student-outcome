@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
 
@@ -76,6 +76,17 @@ function App() {
   const [prediction, setPrediction] = useState(null);
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState("");
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
+
+  useEffect(() => {
+    if (!selectedPhoto) return undefined;
+
+    const closeOnEscape = event => {
+      if (event.key === "Escape") setSelectedPhoto(null);
+    };
+    document.addEventListener("keydown", closeOnEscape);
+    return () => document.removeEventListener("keydown", closeOnEscape);
+  }, [selectedPhoto]);
 
   const update = (key, value) => setValues(v => ({ ...v, [key]: value }));
   const selectTab = tab => {
@@ -312,7 +323,14 @@ function App() {
                 <article className="team-card" key={`${member.name}-${index}`}>
                   <div className="team-portrait">
                     {member.photo ? (
-                      <img src={member.photo} alt={`${member.name} portrait`} />
+                      <button
+                        className="team-photo-button"
+                        type="button"
+                        onClick={() => setSelectedPhoto(member)}
+                        aria-label={`View ${member.name}'s photo`}
+                      >
+                        <img src={member.photo} alt={`${member.name} portrait`} />
+                      </button>
                     ) : (
                       <div className="team-photo-placeholder" role="img" aria-label="Photo coming soon">
                         <span>PORTRAIT</span>
@@ -339,6 +357,34 @@ function App() {
           </div>
         </section>
       </main>
+
+      {selectedPhoto && (
+        <div
+          className="photo-viewer"
+          role="presentation"
+          onClick={() => setSelectedPhoto(null)}
+        >
+          <div
+            className="photo-viewer-panel"
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${selectedPhoto.name}'s photo`}
+            onClick={event => event.stopPropagation()}
+          >
+            <button
+              className="photo-viewer-close"
+              type="button"
+              onClick={() => setSelectedPhoto(null)}
+              aria-label="Close photo"
+              autoFocus
+            >
+              ×
+            </button>
+            <img src={selectedPhoto.photo} alt={`${selectedPhoto.name} portrait`} />
+            <p>{selectedPhoto.name}</p>
+          </div>
+        </div>
+      )}
 
       <footer><div><strong>DATA SPEAKS</strong><span>Student Dropout Prediction and Academic Success Analysis</span></div><span>Local project showcase · No deployment included</span></footer>
     </div>

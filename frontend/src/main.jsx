@@ -36,6 +36,7 @@ const clusterRows = [
 const teamMembers = [
   {
     name: "Shravan Pawar",
+    role: "TEAM LEADER",
     photo: "/team-portraits/my_photo.jpeg",
     biography: "A simple Biography",
     contribution: " Led the overall project development, including workflow design, data preprocessing, feature engineering, classification, PCA-based dimensionality reduction, model development and evaluation, data visualization, and integration of the analytical pipeline into the web application.",
@@ -321,7 +322,7 @@ function App() {
                     )}
                   </div>
                   <div className="team-card-content">
-                    <p className="eyebrow">TEAM MEMBER</p>
+                    <p className="eyebrow">{member.role || "TEAM MEMBER"}</p>
                     <h3>{member.name}</h3>
                     <div className="team-detail">
                       <span>BIOGRAPHY</span>

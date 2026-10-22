@@ -38,13 +38,13 @@ const teamMembers = [
     name: "Shravan Pawar",
     photo: "/team-portraits/my_photo.jpeg",
     biography: "A simple Biography",
-    contribution: "Team Leader, worked in project workflow, data processing, classification, PCA, visualisation and providing framework to the website",
+    contribution: " Led the overall project development, including workflow design, data preprocessing, feature engineering, classification, PCA-based dimensionality reduction, model development and evaluation, data visualization, and integration of the analytical pipeline into the web application.",
   },
   {
     name: "Prajyot Satarde",
     photo: "/team-portraits/prajyot-satarde.png",
     biography: "A simple Biography",
-    contribution: "Worked in Core conceptual portion and made the frontend for the website",
+    contribution: "Worked in Core conceptual portion and helped translate the project requirements into a user-facing interface, and worked on frontend implementation and website presentation",
   },
   {
     name: "Shubham Adhav",
@@ -56,7 +56,7 @@ const teamMembers = [
     name: "Shankar",
     photo: "/team-portraits/sankar.jpeg",
     biography: "A simple Biography",
-    contribution: "Helped the team to have proper data preprocessing and clustering",
+    contribution: "Contributed to data preparation and clustering-related analysis, helping organize the dataset and explore patterns and similarities among data points.Helped the team to have proper data preprocessing and clustering",
   },
   {
     name: "Manasa Osogulla",

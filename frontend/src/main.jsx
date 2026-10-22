@@ -36,7 +36,7 @@ const clusterRows = [
 const teamMembers = [
   {
     name: "Shravan Pawar",
-    photo: null,
+    photo: "/team-portraits/my_photo.jpeg",
     biography: "A simple Biography",
     contribution: "Team Leader, worked in project workflow, data processing, classification, PCA, visualisation and providing framework to the website",
   },
@@ -48,19 +48,19 @@ const teamMembers = [
   },
   {
     name: "Shubham Adhav",
-    photo: null,
+    photo: "/team-portraits/shubham.jpeg",
     biography: "A simple Biography",
-    contribution: "Worked in analysing the data and processing the proper algorithms for the topic",
+    contribution: "Contributed to the website development, focusing on frontend implementation, page layout, and presenting project information through the user interface.",
   },
   {
     name: "Shankar",
-    photo: null,
+    photo: "/team-portraits/sankar.jpeg",
     biography: "A simple Biography",
     contribution: "Helped the team to have proper data preprocessing and clustering",
   },
   {
     name: "Manasa Osogulla",
-    photo: null,
+    photo: "/team-portraits/manasa.jpeg",
     biography: "A simple Biography",
     contribution: "Managed the team to have a proper visualisation about the project, made project report and the ppt for the presentation",
   },
@@ -300,7 +300,7 @@ function App() {
           <div className="team-profiles">
             <div className="team-section-heading">
               <div><p className="eyebrow">PROJECT CONTRIBUTORS</p><h2>Meet the people</h2></div>
-              <p>Member details can be added to the team profile data in the project source.</p>
+              <p>Meet the people behind the project and the work each member contributed.</p>
             </div>
             <div className="team-grid">
               {teamMembers.map((member, index) => (
@@ -331,7 +331,6 @@ function App() {
                 </article>
               ))}
             </div>
-            <p className="team-editor-note">Team member names, biographies, and project contributions are listed above. Add portrait photos when the team has approved images available.</p>
           </div>
         </section>
       </main>

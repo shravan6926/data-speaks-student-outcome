@@ -38,31 +38,36 @@ const teamMembers = [
     name: "Shravan Pawar",
     role: "TEAM LEADER",
     photo: "/team-portraits/my_photo.jpeg",
-    biography: "A simple Biography",
+    shortBiography: "An enthusiastic learner interested in data science, machine learning, and technology.",
+    biography: "An enthusiastic learner with an interest in data science, machine learning, and technology. Passionate about exploring data-driven solutions to real-world problems, leading with confidence, and bringing ideas together as a team.",
     contribution: " Led the overall project development, including workflow design, data preprocessing, feature engineering, classification, PCA-based dimensionality reduction, model development and evaluation, data visualization, and integration of the analytical pipeline into the web application.",
   },
   {
     name: "Prajyot Satarde",
     photo: "/team-portraits/prajyot-satarde.png",
-    biography: "A simple Biography",
+    shortBiography: "A curious learner interested in technology, creative thinking, and web development.",
+    biography: "A curious learner interested in technology, creative thinking, and web development. Enjoys turning ideas into practical and user-friendly digital solutions.",
     contribution: "Worked in Core conceptual portion and helped translate the project requirements into a user-facing interface, and worked on frontend implementation and website presentation",
   },
   {
     name: "Shubham Adhav",
     photo: "/team-portraits/shubham.jpeg",
-    biography: "A simple Biography",
+    shortBiography: "A motivated student interested in web development and modern technologies.",
+    biography: "A motivated student interested in web development and modern technologies. Enjoys learning new skills and creating engaging digital experiences.",
     contribution: "Contributed to the website development, focusing on frontend implementation, page layout, and presenting project information through the user interface.",
   },
   {
     name: "Shankar",
     photo: "/team-portraits/sankar.jpeg",
-    biography: "A simple Biography",
+    shortBiography: "A dedicated learner interested in data analysis and finding meaningful patterns.",
+    biography: "A dedicated learner interested in data analysis and discovering meaningful patterns in data. Enjoys exploring technical concepts and developing new skills.",
     contribution: "Contributed to data preparation and clustering-related analysis, helping organize the dataset and explore patterns and similarities among data points.Helped the team to have proper data preprocessing and clustering",
   },
   {
     name: "Manasa Osogulla",
     photo: "/team-portraits/manasa.jpeg",
-    biography: "A simple Biography",
+    shortBiography: "An enthusiastic student interested in project organization and visual communication.",
+    biography: "An enthusiastic student interested in project organization, visual communication, and creative presentation. Enjoys collaborating with others and sharing ideas effectively.",
     contribution: "Managed the team to have a proper visualisation about the project, made project report and the ppt for the presentation",
   },
 ];
@@ -344,7 +349,7 @@ function App() {
                     <h3>{member.name}</h3>
                     <div className="team-detail">
                       <span>BIOGRAPHY</span>
-                      <p>{member.biography}</p>
+                      <p>{member.shortBiography}</p>
                     </div>
                     <div className="team-detail">
                       <span>PROJECT CONTRIBUTION</span>
@@ -381,7 +386,11 @@ function App() {
               ×
             </button>
             <img src={selectedPhoto.photo} alt={`${selectedPhoto.name} portrait`} />
-            <p>{selectedPhoto.name}</p>
+            <div className="photo-viewer-details">
+              <p className="photo-viewer-name">{selectedPhoto.name}</p>
+              <span className="photo-viewer-bio-label">BIOGRAPHY</span>
+              <p className="photo-viewer-biography">{selectedPhoto.biography}</p>
+            </div>
           </div>
         </div>
       )}

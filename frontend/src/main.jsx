@@ -67,7 +67,10 @@ const teamMembers = [
 ];
 
 function App() {
-  const [activeTab, setActiveTab] = useState("project");
+  const [activeTab, setActiveTab] = useState(() => {
+    const savedTab = sessionStorage.getItem("data-speaks-active-tab");
+    return ["project", "results", "team"].includes(savedTab) ? savedTab : "project";
+  });
   const [values, setValues] = useState(Object.fromEntries(numericInputs.map(([k, v]) => [k, v])));
   const [prediction, setPrediction] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -76,6 +79,7 @@ function App() {
   const update = (key, value) => setValues(v => ({ ...v, [key]: value }));
   const selectTab = tab => {
     setActiveTab(tab);
+    sessionStorage.setItem("data-speaks-active-tab", tab);
     window.scrollTo(0, 0);
   };
 
